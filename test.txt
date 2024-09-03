@@ -1,0 +1,14 @@
+func main() : Int
+{
+    Boolean isTrue := true
+
+    if isTrue {
+        repeat 5 {
+            print("Hello")
+        }
+
+        print("Hello")
+    }
+
+    return 0
+}
