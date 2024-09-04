@@ -1,6 +1,6 @@
 package com.kingmang.tucomp.lexer;
 
-public class Num extends Token{
+public class Num extends Token {
     public final int value;
 
     public Num(int value) {
@@ -9,11 +9,12 @@ public class Num extends Token{
     }
 
     @Override
-    public String stringify(){
-        return String.valueOf(value);
+    public String toString() {
+        return "Number: " + value;
     }
+
     @Override
-    public String toString(){
-        return "Num: " + value;
+    public String stringify() {
+        return String.valueOf(value);
     }
 }

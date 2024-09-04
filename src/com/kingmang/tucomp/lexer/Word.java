@@ -1,7 +1,6 @@
 package com.kingmang.tucomp.lexer;
 
-public class Word extends Token{
-
+public class Word extends Token {
     private final String lexeme;
 
     public Word(int tag, String lexeme) {
@@ -10,17 +9,16 @@ public class Word extends Token{
     }
 
     @Override
-    public String stringify(){
+    public String toString() {
+        return "Word: " + lexeme
+                + " Tag: " + tag;
+    }
+    public String getLexeme(){
         return lexeme;
     }
 
     @Override
-    public String toString(){
-        return "Word: " + lexeme
-                + "Tag: " + tag;
-    }
-
-    public String getLexeme(){
+    public String stringify() {
         return lexeme;
     }
 }

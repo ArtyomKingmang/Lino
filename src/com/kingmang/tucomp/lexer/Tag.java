@@ -1,23 +1,23 @@
 package com.kingmang.tucomp.lexer;
 
 public class Tag {
-    public static int
-        NUM = 1,
-        ID = 2,
-        NULL = 3,
-        COMPARATOR = 4,
-        ASSIGN = 5,
-        IF = 6,
-        WHILE = 7,
-        REPEAT = 8,
-        BEGIN = 9,
-        END = 10,
-        RETURN = 11,
-        COMMENT = 12,
-        TYPE = 13,
-        VOID = 14,
-        PRINT = 15,
-        LITERAL = 16,
-        DOUBLEDOT = 17,
-        FUNC = 18;
+    public static final int
+            NUM = 256,
+            ID = 257,
+            NULL = 65535,
+            COMPARATOR = 260,
+            ASSIGN = 261,
+            IF = 262,
+            WHILE = 263,
+            BEGIN = 265,
+            END = 266,
+            RETURN = 267,
+            REPEAT = 268,
+            COMMENT = 269,
+            TYPE = 270,
+            VOID = 271,
+            PRINT = 272,
+            LITERAl = 273,
+            DOUBLEDOT = 274,
+            FUNC = 275;
 }

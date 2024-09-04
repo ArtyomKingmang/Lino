@@ -13,34 +13,37 @@ public class Lexer {
     private Hashtable words = new Hashtable();
     private FileInputStream fileInputStream;
 
-    public Lexer(File input){
-        try{
+    public Lexer(File input) {
+        try {
             fileInputStream = new FileInputStream(input);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        put(new Word(Tag.LITERAL, "true"));
-        put(new Word(Tag.LITERAL, "false"));
-        put(new Word(Tag.FUNC, "func"));
-        put(new Word(Tag.TYPE, "Int"));
-        put(new Word(Tag.TYPE, "Char"));
-        put(new Word(Tag.TYPE, "String"));
-        put(new Word(Tag.TYPE, "Boolean"));
-        put(new Word(Tag.RETURN, "return"));
-        put(new Word(Tag.WHILE, "while"));
-        put(new Word(Tag.IF, "if"));
-        put(new Word(Tag.REPEAT, "repeat"));
-        put(new Word(Tag.VOID, "void"));
-        put(new Word(Tag.PRINT, "print"));
+        putKeyword(new Word(Tag.LITERAl, "true"));
+        putKeyword(new Word(Tag.LITERAl, "false"));
+        putKeyword(new Word(Tag.FUNC, "func"));
+        putKeyword(new Word(Tag.TYPE, "Int"));
+        putKeyword(new Word(Tag.TYPE, "Char"));
+        putKeyword(new Word(Tag.TYPE, "String"));
+        putKeyword(new Word(Tag.TYPE, "Boolean"));
+        putKeyword(new Word(Tag.RETURN, "return"));
+        putKeyword(new Word(Tag.WHILE, "while"));
+        putKeyword(new Word(Tag.IF, "if"));
+        putKeyword(new Word(Tag.REPEAT, "repeat"));
+        putKeyword(new Word(Tag.VOID, "void"));
+        putKeyword(new Word(Tag.PRINT, "print"));
 
     }
 
-    public Token tokenize() throws IOException{
-        for(;; peek = nextChar()){
-          if(peek == ' ' || peek == '\t' || peek == '\r');
-          else if (peek == '\n') line += 1;
-          else break;
+    private void putKeyword(Word t) {
+        words.put(t.getLexeme(), t);
+    }
+
+    public Token tokenize() throws IOException {
+        for (;; peek = nextChar()) {
+            if (peek == ' ' || peek == '\t' || peek == '\r') ;
+            else if (peek == '\n') line = line + 1;
+            else break;
         }
 
         if (peek == '/') {
@@ -50,16 +53,14 @@ public class Lexer {
                 for (; ; peek = nextChar()) {
                     if (peek == '\n' || peek == Tag.NULL) {
                         peek = nextChar();
-                        line += 1;
+                        line = line + 1;
                         return new Token(Tag.COMMENT);
                     }
                 }
-
-
             } else if (peek == '*') {
                 peek = nextChar();
                 for (; ; peek = nextChar()) {
-                    if (peek == '\n') line += 1;
+                    if (peek == '\n') line = line + 1;
                     else if (peek == '*') {
                         peek = nextChar();
                         if (peek == '/') {
@@ -67,73 +68,80 @@ public class Lexer {
                             return new Token(Tag.COMMENT);
                         }
                     }
-                    if (peek == Tag.NULL) return new Token(Tag.COMMENT);
+                    if (peek == Tag.NULL) {
+                        return new Token(Tag.COMMENT);
+                    }
                 }
             } else {
                 peek = prev;
                 return new Token('/');
             }
         }
-        if(Character.isDigit(peek)){
-            int v = 0;
-            do{
-                v = 10 * v + Character.digit(peek, 10);
-                peek = nextChar();
-            }while(Character.isDigit(peek));
-            return new Num(v);
-        }
-        if(Character.isLetter(peek)){
-            StringBuilder buffer = new StringBuilder();
-            do{
-                buffer.append(peek);
-                peek = nextChar();
-            }while(Character.isLetterOrDigit(peek));
 
-            String result = buffer.toString();
-            Word word = (Word) words.get(result);
-            if(word != null) return word;
-            word = new Word(Tag.ID, result);
-            words.put(result, word);
+        if (Character.isDigit(peek)) {
+            int result = 0;
+            do {
+                result = 10 * result + Character.digit(peek, 10);
+                peek = nextChar();
+            } while (Character.isDigit(peek));
+            return new Num(result);
+        }
+
+        if (Character.isLetter(peek)) {
+            StringBuilder builder = new StringBuilder();
+            do {
+                builder.append(peek);
+                peek = nextChar();
+            } while (Character.isLetterOrDigit(peek));
+
+            String buffer = builder.toString();
+            Word word = (Word) words.get(buffer);
+            if (word != null) return word;
+            word = new Word(Tag.ID, buffer);
+            words.put(buffer, word);
             return word;
         }
-        if(peek == ':'){
+
+        if (peek == ':') {
             char prev = peek;
             peek = nextChar();
-            if(peek == '='){
+            if (peek == '=') {
                 peek = nextChar();
                 return new Token(Tag.ASSIGN);
-            }else{
+            } else {
                 peek = nextChar();
                 return new Token(Tag.DOUBLEDOT);
             }
         }
-        if(peek == '<'){
+
+        if (peek == '<') {
             peek = nextChar();
-            if(peek == '>'){
+            if (peek == '>') {
                 peek = nextChar();
                 return new Operator("<>");
             } else if (peek == '=') {
                 peek = nextChar();
                 return new Operator("<=");
-            }else{
+            } else {
                 return new Operator("<");
             }
         }
 
-        if(peek == '>'){
+        if (peek == '>') {
             peek = nextChar();
             if (peek == '=') {
                 peek = nextChar();
                 return new Operator(">=");
-            }else{
+            } else {
                 return new Operator(">");
             }
         }
-        if(peek == '='){
+
+        if (peek == '=') {
             peek = nextChar();
             return new Operator("==");
         }
-        if(peek == '}'){
+        if (peek == '}') {
             peek = nextChar();
             return new Token(Tag.END);
         }
@@ -141,26 +149,22 @@ public class Lexer {
             peek = nextChar();
             return new Token(Tag.BEGIN);
         }
-        if(peek == '"'){
-            StringBuilder buffer = new StringBuilder();
-            peek = nextChar();
-            do{
-                buffer.append(peek);
-                peek = nextChar();
-            }while(peek != '"' && peek != '\n' && peek != Tag.NULL);
 
+
+        if (peek == '"') {
+            StringBuilder builder = new StringBuilder();
             peek = nextChar();
-            return new Literal(buffer.toString());
+            do {
+                builder.append(peek);
+                peek = nextChar();
+            } while (peek != '"' && peek != '\n' && peek != Tag.NULL);
+            peek = nextChar();
+            return new Literal(builder.toString());
         }
 
-        Token token = new Token(peek);
+        Token result = new Token(peek);
         peek = ' ';
-        return token;
-        //return new Token(1);
-    }
-
-    private void put(Word word){
-        words.put(word.getLexeme(), word);
+        return result;
     }
 
     private char nextChar() throws IOException {
