@@ -103,16 +103,10 @@ public class Lexer {
         }
 
         if (peek == ':') {
-            char prev = peek;
             peek = nextChar();
-            if (peek == '=') {
-                peek = nextChar();
-                return new Token(Tag.ASSIGN);
-            } else {
-                peek = nextChar();
-                return new Token(Tag.DOUBLEDOT);
-            }
+            return new Token(Tag.DOUBLEDOT);
         }
+
 
         if (peek == '<') {
             peek = nextChar();
@@ -139,7 +133,13 @@ public class Lexer {
 
         if (peek == '=') {
             peek = nextChar();
-            return new Operator("==");
+            if (peek == '=') {
+                peek = nextChar();
+                return new Operator("==");
+            }else {
+                peek = nextChar();
+                return new Token(Tag.ASSIGN);
+            }
         }
         if (peek == '}') {
             peek = nextChar();

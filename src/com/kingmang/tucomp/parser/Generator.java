@@ -2,7 +2,7 @@ package com.kingmang.tucomp.parser;
 
 public class Generator {
 
-    public String generate(String lexeme){
+    public static String translateLexeme(String lexeme){
         switch(lexeme){
             case "Int":
                 return "int ";
