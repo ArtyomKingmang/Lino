@@ -1,4 +1,4 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,19 +19,19 @@ public class Lexer {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        putKeyword(new Word(Tag.LITERAl, "true"));
-        putKeyword(new Word(Tag.LITERAl, "false"));
-        putKeyword(new Word(Tag.FUNC, "func"));
-        putKeyword(new Word(Tag.TYPE, "Int"));
-        putKeyword(new Word(Tag.TYPE, "Char"));
-        putKeyword(new Word(Tag.TYPE, "String"));
-        putKeyword(new Word(Tag.TYPE, "Boolean"));
-        putKeyword(new Word(Tag.RETURN, "return"));
-        putKeyword(new Word(Tag.WHILE, "while"));
-        putKeyword(new Word(Tag.IF, "if"));
-        putKeyword(new Word(Tag.REPEAT, "repeat"));
-        putKeyword(new Word(Tag.VOID, "void"));
-        putKeyword(new Word(Tag.PRINT, "print"));
+        putKeyword(new Word(TokenType.LITERAl, "true"));
+        putKeyword(new Word(TokenType.LITERAl, "false"));
+        putKeyword(new Word(TokenType.FUNC, "func"));
+        putKeyword(new Word(TokenType.TYPE, "Int"));
+        putKeyword(new Word(TokenType.TYPE, "Char"));
+        putKeyword(new Word(TokenType.TYPE, "String"));
+        putKeyword(new Word(TokenType.TYPE, "Boolean"));
+        putKeyword(new Word(TokenType.RETURN, "return"));
+        putKeyword(new Word(TokenType.WHILE, "while"));
+        putKeyword(new Word(TokenType.IF, "if"));
+        putKeyword(new Word(TokenType.REPEAT, "repeat"));
+        putKeyword(new Word(TokenType.VOID, "void"));
+        putKeyword(new Word(TokenType.PRINT, "print"));
 
     }
 
@@ -51,10 +51,10 @@ public class Lexer {
             char prev = peek;
             if (peek == '/') {
                 for (; ; peek = nextChar()) {
-                    if (peek == '\n' || peek == Tag.NULL) {
+                    if (peek == '\n' || peek == TokenType.NULL) {
                         peek = nextChar();
                         line = line + 1;
-                        return new Token(Tag.COMMENT);
+                        return new Token(TokenType.COMMENT);
                     }
                 }
             } else if (peek == '*') {
@@ -65,11 +65,11 @@ public class Lexer {
                         peek = nextChar();
                         if (peek == '/') {
                             peek = nextChar();
-                            return new Token(Tag.COMMENT);
+                            return new Token(TokenType.COMMENT);
                         }
                     }
-                    if (peek == Tag.NULL) {
-                        return new Token(Tag.COMMENT);
+                    if (peek == TokenType.NULL) {
+                        return new Token(TokenType.COMMENT);
                     }
                 }
             } else {
@@ -97,14 +97,14 @@ public class Lexer {
             String buffer = builder.toString();
             Word word = (Word) words.get(buffer);
             if (word != null) return word;
-            word = new Word(Tag.ID, buffer);
+            word = new Word(TokenType.ID, buffer);
             words.put(buffer, word);
             return word;
         }
 
         if (peek == ':') {
             peek = nextChar();
-            return new Token(Tag.DOUBLEDOT);
+            return new Token(TokenType.DOUBLEDOT);
         }
 
 
@@ -138,16 +138,16 @@ public class Lexer {
                 return new Operator("==");
             }else {
                 peek = nextChar();
-                return new Token(Tag.ASSIGN);
+                return new Token(TokenType.ASSIGN);
             }
         }
         if (peek == '}') {
             peek = nextChar();
-            return new Token(Tag.END);
+            return new Token(TokenType.END);
         }
         if(peek == '{'){
             peek = nextChar();
-            return new Token(Tag.BEGIN);
+            return new Token(TokenType.BEGIN);
         }
 
 
@@ -157,7 +157,7 @@ public class Lexer {
             do {
                 builder.append(peek);
                 peek = nextChar();
-            } while (peek != '"' && peek != '\n' && peek != Tag.NULL);
+            } while (peek != '"' && peek != '\n' && peek != TokenType.NULL);
             peek = nextChar();
             return new Literal(builder.toString());
         }

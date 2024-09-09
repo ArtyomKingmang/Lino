@@ -1,7 +1,7 @@
-package com.kingmang.tucomp.parser;
+package com.kingmang.lino.parser;
 
-import com.kingmang.tucomp.lexer.*;
-import com.kingmang.tucomp.symbol.Environment;
+import com.kingmang.lino.lexer.*;
+import com.kingmang.lino.symbol.Environment;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +28,8 @@ public class Parser {
     private String booleanExpr() throws IOException{
         StringBuilder booleanExpr = new StringBuilder();
         booleanExpr.append(expr());
-        if(token.tag == Tag.COMPARATOR){
-            booleanExpr.append(Generator.translateLexeme(match(Tag.COMPARATOR)));
+        if(token.tag == TokenType.COMPARATOR){
+            booleanExpr.append(Generator.translateLexeme(match(TokenType.COMPARATOR)));
             booleanExpr.append(expr());
         }
         return booleanExpr.toString();
@@ -62,14 +62,14 @@ public class Parser {
             factor.append(match(')'));
         }else if(token instanceof Num){
             buffer.append(((Num) token).value).append(' ');
-            factor.append(match(Tag.NUM));
-        }else if(token.tag == Tag.ID){
+            factor.append(match(TokenType.NUM));
+        }else if(token.tag == TokenType.ID){
             buffer.append(((Word) token).getLexeme()).append(' ');
-            String id = match(Tag.ID);
+            String id = match(TokenType.ID);
             factor.append(id);
             if(token.tag == '.'){
                 factor.append(match('.'));
-                factor.append(match(Tag.ID));
+                factor.append(match(TokenType.ID));
             }
             if(token.tag == '['){
                 factor.append(match('['));
@@ -78,10 +78,10 @@ public class Parser {
             }
             if(environment.get(id) == null){
                 appendLineToConsole(String.format("Error ar line: %d Cannot resolve symbol %s", lexer.line, id),  true);
-            }else if(token.tag == Tag.LITERAl){
-                factor.append(match(Tag.LITERAl));
+            }else if(token.tag == TokenType.LITERAl){
+                factor.append(match(TokenType.LITERAl));
             }else{
-                error(Tag.NUM, "NUM/WORD/LITERAL");
+                error(TokenType.NUM, "NUM/WORD/LITERAL");
             }
 
         }
@@ -140,15 +140,15 @@ public class Parser {
     private void nextToken() throws IOException {
         do{
             token = lexer.tokenize();
-        }while (token.tag == Tag.COMMENT);
+        }while (token.tag == TokenType.COMMENT);
         appendLineToConsole(token.toString(), false);
     }
     private boolean isEndToken(Token token){
         return
                 token.tag == ';' ||
-                token.tag == Tag.NULL ||
-                token.tag == Tag.END ||
-                token.tag == Tag.RETURN;
+                token.tag == TokenType.NULL ||
+                token.tag == TokenType.END ||
+                token.tag == TokenType.RETURN;
     }
     private void appendLineToConsole(String string, boolean isError){
         console.append(string).append("\n");

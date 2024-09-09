@@ -1,10 +1,10 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
 public class Num extends Token {
     public final int value;
 
     public Num(int value) {
-        super(Tag.NUM);
+        super(TokenType.NUM);
         this.value = value;
     }
 

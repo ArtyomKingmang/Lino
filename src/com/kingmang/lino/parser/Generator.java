@@ -1,4 +1,4 @@
-package com.kingmang.tucomp.parser;
+package com.kingmang.lino.parser;
 
 public class Generator {
 

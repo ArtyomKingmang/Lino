@@ -1,4 +1,4 @@
-package com.kingmang.tucomp.symbol;
+package com.kingmang.lino.symbol;
 
 import java.util.Hashtable;
 

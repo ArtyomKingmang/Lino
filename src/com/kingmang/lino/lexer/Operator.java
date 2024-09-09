@@ -1,10 +1,10 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
 public class Operator extends Token {
     public final String value;
 
     public Operator(String value) {
-        super(Tag.COMPARATOR);
+        super(TokenType.COMPARATOR);
         this.value = value;
     }
 

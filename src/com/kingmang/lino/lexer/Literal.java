@@ -1,10 +1,10 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
 public class Literal extends Token{
     public final String value;
 
     public Literal(String value) {
-        super(Tag.LITERAl);
+        super(TokenType.LITERAl);
         this.value = value;
     }
 

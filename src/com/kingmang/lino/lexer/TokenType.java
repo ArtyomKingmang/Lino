@@ -1,6 +1,6 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
-public class Tag {
+public class TokenType {
     public static final int
             NUM = 256,
             ID = 257,

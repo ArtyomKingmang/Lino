@@ -1,4 +1,4 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
 public class Token {
     public final int tag;
@@ -13,7 +13,7 @@ public class Token {
     }
 
     public String stringify() {
-        if (tag == Tag.ASSIGN)
+        if (tag == TokenType.ASSIGN)
             return "=";
         return String.valueOf((char) tag);
     }

@@ -1,4 +1,4 @@
-package com.kingmang.tucomp.lexer;
+package com.kingmang.lino.lexer;
 
 public class Word extends Token {
     private final String lexeme;
@@ -11,7 +11,7 @@ public class Word extends Token {
     @Override
     public String toString() {
         return "Word: " + lexeme
-                + " Tag: " + tag;
+                + " TokenType: " + tag;
     }
     public String getLexeme(){
         return lexeme;

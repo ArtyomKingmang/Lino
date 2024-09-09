@@ -1,8 +1,8 @@
-package com.kingmang.tucomp;
+package com.kingmang.lino;
 
 
-import com.kingmang.tucomp.lexer.Lexer;
-import com.kingmang.tucomp.lexer.Token;
+import com.kingmang.lino.lexer.Lexer;
+import com.kingmang.lino.lexer.Token;
 
 import java.io.File;
 import java.io.IOException;
