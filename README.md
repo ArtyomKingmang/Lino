@@ -1,6 +1,10 @@
-# Lino
+<div align="center">
+  <img src="icon.png" width="300">
+</div>
 
-Compiled programming language. Target Platform: Arduino
+Simple compiled programming language for tutorial. 
+
+Target Platform: Arduino
 
 Example:
 
