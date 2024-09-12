@@ -18,6 +18,6 @@ public class TokenType {
             VOID = 271,
             PRINT = 272,
             LITERAl = 273,
-            DOUBLEDOT = 274,
+            COLON = 274,
             FUNC = 275;
 }

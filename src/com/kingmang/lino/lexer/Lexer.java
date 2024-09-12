@@ -104,7 +104,7 @@ public class Lexer {
 
         if (peek == ':') {
             peek = nextChar();
-            return new Token(TokenType.DOUBLEDOT);
+            return new Token(TokenType.COLON);
         }
 
 
