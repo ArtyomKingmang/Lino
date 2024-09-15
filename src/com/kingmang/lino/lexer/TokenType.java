@@ -9,8 +9,8 @@ public class TokenType {
             ASSIGN = 261,
             IF = 262,
             WHILE = 263,
-            BEGIN = 265,
-            END = 266,
+            LBRACE = 265,
+            RBRACE = 266,
             RETURN = 267,
             REPEAT = 268,
             COMMENT = 269,
@@ -19,5 +19,6 @@ public class TokenType {
             PRINT = 272,
             LITERAl = 273,
             COLON = 274,
-            FUNC = 275;
+            SBEGIN = 275,
+            FUNC = 276;
 }
