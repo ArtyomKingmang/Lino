@@ -41,8 +41,8 @@ Test output:
 
 ````cpp
 int main(int a){
-	int c=10;
-	Serial.print("Hello");	
-	return 0;
+   int c=10;
+   Serial.print("Hello");
+   return 0;
 }
 ````
