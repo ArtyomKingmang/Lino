@@ -32,7 +32,7 @@ public class Lexer {
         putKeyword(new Word(TokenType.REPEAT, "repeat"));
         putKeyword(new Word(TokenType.VOID, "void"));
         putKeyword(new Word(TokenType.PRINT, "print"));
-        putKeyword(new Word(TokenType.SBEGIN, "sbegin"));
+        //putKeyword(new Word(TokenType.SBEGIN, "sbegin"));
     }
 
     private void putKeyword(Word t) {
@@ -106,7 +106,6 @@ public class Lexer {
             peek = nextChar();
             return new Token(TokenType.COLON);
         }
-
 
         if (peek == '<') {
             peek = nextChar();

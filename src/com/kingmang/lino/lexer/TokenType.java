@@ -19,6 +19,5 @@ public class TokenType {
             PRINT = 272,
             LITERAl = 273,
             COLON = 274,
-            SBEGIN = 275,
-            FUNC = 276;
+            FUNC = 275;
 }

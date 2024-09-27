@@ -13,6 +13,6 @@ public class Generator {
             case "<>":
                 return "!= ";
         }
-        return "";
+        return lexeme.concat(" ");
     }
 }
