@@ -25,3 +25,24 @@ func loop() : Void {
 }
 
 ````
+
+Test input:
+
+````kotlin
+func main(Int a) : Int
+{
+    Int c = 10
+    print "Hello"
+    return 0
+}
+````
+
+Test output:
+
+````cpp
+int main(int a){
+   int c=10;
+   Serial.print("Hello");
+   return 0;
+}
+````
