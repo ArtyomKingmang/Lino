@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    private StringBuffer arduinoBuffer;
+    private final StringBuffer arduinoBuffer;
     private Environment environment;
-    private PrintWriter printWriter;
-    private StringBuffer buffer;
+    private final PrintWriter printWriter;
+    private final StringBuffer buffer;
     public StringBuilder console;
-    private ArrayList<Integer> errors = new ArrayList<>();
-    private Lexer lexer;
+    private final ArrayList<Integer> errors = new ArrayList<>();
+    private final Lexer lexer;
     private Token token;
     private String space = "";
     private boolean error;
@@ -32,16 +32,14 @@ public class Parser {
         nextToken();
     }
 
-    public String program() throws IOException {
+    public void program() throws IOException {
         environment = null;
         arduinoBuffer.append(methods());
 
         printWriter.write(arduinoBuffer.toString());
         printWriter.close();
 
-        appendLineToConsole(String.format("Done with %d %s", errors.size(), errors.size() <= 1 ? "error" : "errors"), errors.size() > 0);
-
-        return arduinoBuffer.toString();
+        appendLineToConsole(String.format("Done with %d %s", errors.size(), errors.size() <= 1 ? "error" : "errors"), !errors.isEmpty());
 
     }
 
@@ -379,10 +377,10 @@ public class Parser {
         }
     }
     private void skipErrors(Token expected) throws IOException {
-        if(!isEndToken(expected) && !isEndToken(token)){
+        if(isEndToken(expected) && isEndToken(token)){
             do{
                 nextToken();
-            }while(!isEndToken(token));
+            }while(isEndToken(token));
         }
     }
     private void nextToken() throws IOException {
@@ -393,10 +391,10 @@ public class Parser {
     }
     private boolean isEndToken(Token token){
         return
-                token.tag == ';' ||
-                token.tag == TokenType.NULL ||
-                token.tag == TokenType.RBRACE ||
-                token.tag == TokenType.RETURN;
+                token.tag != ';' &&
+                        token.tag != TokenType.NULL &&
+                        token.tag != TokenType.RBRACE &&
+                        token.tag != TokenType.RETURN;
     }
     private void appendLineToConsole(String string, boolean isError){
         console.append(string).append("\n");

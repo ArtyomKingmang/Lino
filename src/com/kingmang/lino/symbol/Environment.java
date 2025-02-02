@@ -1,13 +1,14 @@
 package com.kingmang.lino.symbol;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Environment {
-    private Environment previous;
-    private Hashtable table;
+    private final Environment previous;
+    private final HashMap<String, Symbol> table;
 
     public Environment(Environment previous){
-        table = new Hashtable();
+        table = new HashMap<>();
         this.previous = previous;
     }
 
@@ -17,7 +18,7 @@ public class Environment {
 
     public Symbol get(String str){
         for(Environment environment = this; environment != null; environment = environment.previous){
-            Symbol found = (Symbol) (environment.table.get(str));
+            Symbol found = (environment.table.get(str));
             if(found != null) return found;
         }
         return null;

@@ -3,16 +3,12 @@ package com.kingmang.lino.parser;
 public class Generator {
 
     public static String translateLexeme(String lexeme){
-        switch(lexeme){
-            case "Int":
-                return "int ";
-            case "Char":
-                return "char ";
-            case "Boolean":
-                return "boolean ";
-            case "<>":
-                return "!= ";
-        }
-        return lexeme.concat(" ");
+        return switch (lexeme) {
+            case "Int" -> "int ";
+            case "Char" -> "char ";
+            case "Boolean" -> "boolean ";
+            case "<>" -> "!= ";
+            default -> lexeme.concat(" ");
+        };
     }
 }

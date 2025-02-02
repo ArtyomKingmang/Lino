@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Lexer {
 
     public int line = 1;
     private char peek = ' ';
-    private Hashtable words = new Hashtable();
+    private final HashMap<String, Word> words = new HashMap<>();
     private FileInputStream fileInputStream;
 
     public Lexer(File input) {
@@ -73,7 +74,6 @@ public class Lexer {
                     }
                 }
             } else {
-                peek = prev;
                 return new Token('/');
             }
         }

@@ -1,0 +1,7 @@
+func main(Int a) : Int
+{
+    Int c = 10
+    print "Hello"
+    return 0
+}
+
